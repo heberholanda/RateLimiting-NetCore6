@@ -7,15 +7,16 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 builder.Services.AddInMemoryRateLimiting();
 builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
-
+/*
 builder.Services.Configure<IpRateLimitOptions>(options =>
 {
     options.EnableEndpointRateLimiting = true;
     options.StackBlockedRequests = false;
     options.HttpStatusCode = 429;
     options.RealIpHeader = "X-Real-IP";
+    options.QuotaExceededMessage = "Maximum request limit exceeded!";
     options.EndpointWhitelist = new List<string>() { "get:/api/license", "*:/api/status" };
-    options.IpWhitelist = new List<string>() { "127.0.0.1", "::1/10", "192.168.0.0/24" };
+    //options.IpWhitelist = new List<string>() { "127.0.0.1", "::1/10", "192.168.0.0/24" };
     options.GeneralRules = new List<RateLimitRule>
         {
             new RateLimitRule
@@ -26,7 +27,7 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
             }
         };
 });
-
+*/
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
