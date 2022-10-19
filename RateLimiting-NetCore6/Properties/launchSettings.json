@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "RateLimiting_NetCore6": {
+    "RateLimiting": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
