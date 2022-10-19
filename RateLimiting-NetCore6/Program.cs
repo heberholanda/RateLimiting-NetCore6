@@ -5,19 +5,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMemoryCache();
-builder.Services.AddInMemoryRateLimiting();
 
-// Configurations
+// Ip / Client Rate Limiting from appsettings.json
 builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
 builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("ClientRateLimiting"));
 
 // Policies
-builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
-builder.Services.Configure<ClientRateLimitPolicies>(builder.Configuration.GetSection("ClientRateLimitPolicies"));
+builder.Services.Configure<IpRateLimitPolicies>(options => builder.Configuration.GetSection("IpRateLimitPolicies").Bind(options));
+builder.Services.Configure<ClientRateLimitPolicies>(options => builder.Configuration.GetSection("ClientRateLimitPolicies").Bind(options));
 
 builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
+builder.Services.AddInMemoryRateLimiting();
 
 /*
 builder.Services.Configure<IpRateLimitOptions>(options =>
@@ -63,6 +64,9 @@ if (app.Environment.IsDevelopment())
 
 // Ip Rate Limiting
 app.UseIpRateLimiting();
+
+// Client Rate Limiting
+app.UseClientRateLimiting();
 
 app.UseHttpsRedirection();
 
