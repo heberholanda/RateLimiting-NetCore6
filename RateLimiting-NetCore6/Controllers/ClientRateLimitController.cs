@@ -19,22 +19,22 @@ namespace RateLimiting_NetCore6.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ClientRateLimitPolicy> GetAsync()
+		public async Task<ClientRateLimitPolicy> GetRateLimitPolicyAsync(string clientId = "_client-1")
 		{
 			await _clientPolicyStore.SeedAsync();
 
-			var id = $"{_options.ClientPolicyPrefix}_client-1";
+			var id = $"{_options.ClientPolicyPrefix}{clientId}";
 			ClientRateLimitPolicy? clientPolicy = await _clientPolicyStore.GetAsync(id);
 
             return clientPolicy;
 		}
 
 		[HttpPost]
-		public async Task<ClientRateLimitPolicy?> PostAsync()
+		public async Task<ClientRateLimitPolicy?> PostAsync(string clientId = "_client-1")
 		{
 			await _clientPolicyStore.SeedAsync();
 
-			var id = $"{_options.ClientPolicyPrefix}_client-1";
+			var id = $"{_options.ClientPolicyPrefix}{clientId}";
 			ClientRateLimitPolicy? clientPolicies = await _clientPolicyStore.GetAsync(id);
 
 			if (clientPolicies != null)

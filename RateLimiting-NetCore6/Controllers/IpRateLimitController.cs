@@ -18,7 +18,7 @@ namespace RateLimiting_NetCore6.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IpRateLimitPolicies> GetAsync()
+		public async Task<IpRateLimitPolicies> GetRateLimitPolicyAsync()
 		{
 			await _ipPolicyStore.SeedAsync();
 
